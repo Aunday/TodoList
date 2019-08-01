@@ -1,0 +1,13 @@
+<div class="todo-list">
+    <h1>{{ msg }}</h1>
+    <div @click="showNewTodoItemCreation()">
+        <StandardButtonComponent buttonLabel="Add New"></StandardButtonComponent>
+    </div>
+    <!-- <ClearListButton></ClearListButton> -->
+    <!-- <SortButton></SortButton> -->
+    <NewTodoItemComponent
+        v-if="newTodoItemCreationVisible"
+        @createNewTodoItem="createNewTodoItem">
+    </NewTodoItemComponent>
+    <TodoItemComponent v-for="item in todoItems" :todoItem="item" v-bind:key="item.id"></TodoItemComponent>
+</div>

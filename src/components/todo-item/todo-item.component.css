@@ -1,0 +1,31 @@
+.todo-item-box {
+    height: 60px;
+    background-color: #ffffff;
+    border: 1px solid #cacaf5;
+    display: flex;
+    padding: 20px;
+    margin-top: 5px;
+}
+.complete-icon {
+    cursor: pointer;
+}
+.todo-label {
+    padding-left: 20px;
+    flex: 1;
+    text-align: left;
+}
+.todo-priority {
+    border-radius: 12px;
+    color: white;
+    height: 30px;
+    padding: 6px 7px 6px 5px;
+}
+.priority-green {
+    background-color: #257e31;
+}
+.priority-purple {
+    background-color: #9829a7;
+}
+.priority-red {
+    background-color: #962e27;
+}

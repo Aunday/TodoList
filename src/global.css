@@ -1,0 +1,29 @@
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* text-align: center; */
+    color: #2c3e50;
+}
+body {
+    margin: 0;
+    background-color: #eeeefc;
+}
+.float-right {
+    float: right;
+}
+.display-flex {
+    display: flex;
+}
+* {
+    box-sizing: border-box;
+}
+.color-green {
+    color: #257e31;
+}
+.color-blue {
+    color: #378fe2;
+}
+.color-light-gray {
+    color: #adb7c0;
+}

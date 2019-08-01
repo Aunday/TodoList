@@ -1,0 +1,13 @@
+<div class="todo-item-box">
+    <div class="todo-label-input">
+        <!-- {{ todoItem.label }} -->
+        {{ todoItemLabel }}
+    </div>
+    <div class="todo-priority-input">
+        <!-- {{ todoItem.priority }} -->
+        {{ todoItemPriority }}
+    </div>
+    <div @click="createNewTodoItem()">
+        <StandardButtonComponent buttonLabel="Add"></StandardButtonComponent>
+    </div>
+</div>

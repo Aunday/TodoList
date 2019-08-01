@@ -1,0 +1,7 @@
+.button-box {
+    cursor: pointer;
+    background-color: #378fe2;
+    display: inline-block;
+    color: white;
+    padding: 5px 7px 5px 5px;
+}

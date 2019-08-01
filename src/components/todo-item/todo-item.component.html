@@ -1,0 +1,13 @@
+<div class="todo-item-box">
+    <div class="complete-icon" @click="toggleComplete()">
+        <font-awesome-icon class="color-green" v-if="todoItem.complete" :icon="['far', 'check-square']"></font-awesome-icon>
+        <font-awesome-icon class="color-blue" v-if="!todoItem.complete" :icon="['far', 'square']"></font-awesome-icon>
+    </div>
+    <div class="todo-label">
+        {{ todoItem.label }}
+    </div>
+    <div class="todo-priority" v-bind:class="getPriorityClass(todoItem.priority)">
+        {{ todoItem.priority }}
+    </div>
+    <div class="remove-item-button"></div>
+</div>

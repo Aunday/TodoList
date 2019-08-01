@@ -1,0 +1,19 @@
+.header-bar {
+    background-color: #292a35;
+    height: 30px;
+    width: 100%;
+    display: flex;
+    color: white;
+    padding: 7px;
+}
+.title-bar-left {
+    display: flex;
+    flex: 1;
+}
+.app-logo {
+    margin-right: 5px;
+    color: #378fe2;
+}
+.app-title {
+    font-weight: 700;
+}
