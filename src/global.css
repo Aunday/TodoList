@@ -24,6 +24,12 @@ body {
 .color-blue {
     color: #378fe2;
 }
+.color-red {
+    color: #962e27;
+}
 .color-light-gray {
     color: #adb7c0;
+}
+.margin-left-5 {
+    margin-left: 5px;
 }

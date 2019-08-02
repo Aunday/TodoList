@@ -13,12 +13,14 @@
     padding-left: 20px;
     flex: 1;
     text-align: left;
+    cursor: pointer;
 }
 .todo-priority {
     border-radius: 12px;
     color: white;
-    height: 30px;
-    padding: 6px 7px 6px 5px;
+    height: 25px;
+    padding: 4px 7px 6px 3px;
+    cursor: pointer;
 }
 .priority-green {
     background-color: #257e31;
@@ -28,4 +30,9 @@
 }
 .priority-red {
     background-color: #962e27;
+}
+.remove-item-button {
+    padding: 5px;
+    margin-left: 10px;
+    cursor: pointer;
 }

@@ -2,9 +2,20 @@
 <style scoped src="./standard-button.component.css"></style>
 <script>
 export default {
-  name: 'AddNewButtonComponent',
-  props: {
-      buttonLabel: String
-  }
+    name: 'AddNewButtonComponent',
+    props: {
+        buttonLabel: String,
+        buttonIcon: String
+    },
+    data() {
+        return {
+            /**
+             * Emits click event for this button
+             */
+            onClick: () => {
+                this.$emit('click', '');
+            }
+        }
+    }
 }
 </script>

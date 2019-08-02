@@ -1,11 +1,13 @@
 <div class="todo-item-box">
     <div class="todo-label-input">
-        <!-- {{ todoItem.label }} -->
-        {{ todoItemLabel }}
+        <input type="text" v-model="todoItemLabel" placeholder="Enter task here">
     </div>
     <div class="todo-priority-input">
-        <!-- {{ todoItem.priority }} -->
-        {{ todoItemPriority }}
+        <select v-model="todoItemPriority">
+            <option todoItemPriority>life changing</option>
+            <option>important</option>
+            <option>meh</option>
+        </select>
     </div>
     <div @click="createNewTodoItem()">
         <StandardButtonComponent buttonLabel="Add"></StandardButtonComponent>

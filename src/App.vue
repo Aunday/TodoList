@@ -10,11 +10,11 @@ import ToDoListComponent from './components/todo-list/todo-list.component.vue'
 import HeaderBarComponent from './components/header-bar/header-bar.component.vue'
 
 export default {
-  name: 'app',
-  components: {
-    ToDoListComponent,
-    HeaderBarComponent
-  }
+    name: 'app',
+    components: {
+        ToDoListComponent,
+        HeaderBarComponent
+    }
 }
 </script>
 

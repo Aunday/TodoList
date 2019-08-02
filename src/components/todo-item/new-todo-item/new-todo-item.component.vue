@@ -4,9 +4,6 @@
 import StandardButtonComponent from '../../standard-button/standard-button.component.vue'
 export default {
     name: 'NewTodoItemComponent',
-    props: {
-        // todoItem: Object
-    },
     components: {
         StandardButtonComponent
     },
@@ -14,14 +11,6 @@ export default {
         return {
             todoItemLabel: 'test',
             todoItemPriority: 'important',
-            // createNewTodoItem: priority => {
-            //     const classes = {
-            //         'life changing': 'priority-red',
-            //         important: 'priority-purple',
-            //         meh: 'priority-green',
-            //     };
-            //     return classes[priority];
-            // },
             /**
              * Sends new creation results back out to parent
              */
