@@ -15,7 +15,7 @@
                 v-on:blur="loseFocus()">
         </div>
     </div>
-    <div>
+    <div class="priority-pill">
         <div @click="showPriorityEdit()" v-if="!priorityEditVisible" class="todo-priority" :class="getPriorityClass(todoItem.priority)">
             {{ todoItem.priority }}
         </div>
