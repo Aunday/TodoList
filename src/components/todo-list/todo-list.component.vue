@@ -5,7 +5,7 @@ import TodoItemComponent from '../todo-item/todo-item.component.vue'
 import StandardButtonComponent from '../standard-button/standard-button.component.vue'
 import NewTodoItemComponent from '../todo-item/new-todo-item/new-todo-item.component.vue'
 export default {
-    name: 'ToDoListComponent',
+    name: 'TodoListComponent',
     props: {
         msg: String
     },
@@ -37,88 +37,90 @@ export default {
                     complete: false,
                     priority: 'meh'
                 }
-            ],
-            /**
-             * Toggles visibility of new todo item creation
-             */
-            showNewTodoItemCreation: () => {
-                this.newTodoItemCreationVisible = true;
-            },
-            /**
-             * Adds newly created todo item to list
-             * @param newTodoItem - object containing user-specified label & priority
-             */
-            createNewTodoItem: newTodoItem => {
-                this.todoItems.push({
-                    id: this.todoItems.length + 1,
-                    label: newTodoItem.label,
-                    complete: false,
-                    priority: newTodoItem.priority
-                })
-                this.newTodoItemCreationVisible = false;
-                this.$cookies.set('todoList',{items: this.todoItems});
-            },
-            /**
-             * Removes individual todo item
-             * @param id - number representing id of todo item to be removed
-             */
-            removeItem: removeId => {
-                for (let i = this.todoItems.length - 1; i >= 0; i--) {
-                    const item = this.todoItems[i];
-                    if (item.id === removeId) {
-                        this.todoItems.splice(i, 1);
-                    } else if (item.id > removeId) {
-                        item.id--;
-                    }
+            ]
+        };
+    },
+    methods: {
+        /**
+         * Sorts list based on priority, asc or desc based on button icon
+         */
+        sortList() {
+            const priorityMap = {
+                'life changing': 1,
+                'important': 2,
+                'meh': 3
+            };
+            this.todoItems.sort((a, b) => {
+                const aPriority = priorityMap[a.priority];
+                const bPriority = priorityMap[b.priority];
+                if ((this.sortAscending && aPriority > bPriority) || (!this.sortAscending && aPriority < bPriority)) {
+                    return 1;
                 }
-                this.$cookies.set('todoList',{items: this.todoItems});
-            },
-            /**
-             * Opens confirmation modal to ensure user really wants
-             * to delete all todo items
-             */
-            openClearAllConfirmation: () => {
-                this.$dialog
-                .confirm('Do you really want to clear all items?')
-                .then(() => {
-                    this.todoItems = [];
-                    this.$cookies.set('todoList',{items: this.todoItems});
-                })
-                .catch(() => {
-                });
-            },
-            /**
-             * Returns current sort direction icon
-             */
-            getSortIcon: () => {
-                if (this.sortAscending) {
-                    return 'sort-numeric-down'
+                if ((this.sortAscending && bPriority > aPriority) || (!this.sortAscending && bPriority < aPriority)) {
+                    return -1;
                 }
-                return 'sort-numeric-up'
-            },
-            /**
-             * Sorts list based on priority, asc or desc based on button icon
-             */
-            sortList: () => {
-                const priorityMap = {
-                    'life changing': 1,
-                    'important': 2,
-                    'meh': 3
-                };
-                this.todoItems.sort((a, b) => {
-                    const aPriority = priorityMap[a.priority];
-                    const bPriority = priorityMap[b.priority];
-                    if ((this.sortAscending && aPriority > bPriority) || (!this.sortAscending && aPriority < bPriority)) {
-                        return 1;
-                    }
-                    if ((this.sortAscending && bPriority > aPriority) || (!this.sortAscending && bPriority < aPriority)) {
-                        return -1;
-                    }
-                    return 0;
-                })
-                this.sortAscending = !this.sortAscending;
-                this.$cookies.set('todoList',{items: this.todoItems});
+                return 0;
+            })
+            this.sortAscending = !this.sortAscending;
+            this.$cookies.set('todoList',{items: this.todoItems});
+        },
+        /**
+         * Toggles visibility of new todo item creation
+         */
+        showNewTodoItemCreation() {
+            this.newTodoItemCreationVisible = true;
+        },
+        /**
+         * Adds newly created todo item to list
+         * @param newTodoItem - object containing user-specified label & priority
+         */
+        createNewTodoItem(newTodoItem) {
+            this.todoItems.push({
+                id: this.todoItems.length + 1,
+                label: newTodoItem.label,
+                complete: false,
+                priority: newTodoItem.priority
+            })
+            this.newTodoItemCreationVisible = false;
+            this.$cookies.set('todoList',{items: this.todoItems});
+        },
+        /**
+         * Removes individual todo item
+         * @param id - number representing id of todo item to be removed
+         */
+        removeItem(removeId) {
+            for (let i = this.todoItems.length - 1; i >= 0; i--) {
+                const item = this.todoItems[i];
+                if (item.id === removeId) {
+                    this.todoItems.splice(i, 1);
+                } else if (item.id > removeId) {
+                    item.id--;
+                }
             }
+            this.$cookies.set('todoList',{items: this.todoItems});
+        },
+        /**
+         * Opens confirmation modal to ensure user really wants
+         * to delete all todo items
+         */
+        openClearAllConfirmation() {
+            this.$dialog
+            .confirm('Do you really want to clear all items?')
+            .then(() => {
+                this.todoItems = [];
+                this.$cookies.set('todoList',{items: this.todoItems});
+            })
+            .catch(() => {
+            });
+        },
+        /**
+         * Returns current sort direction icon
+         */
+        getSortIcon() {
+            if (this.sortAscending) {
+                return 'sort-numeric-down'
+            }
+            return 'sort-numeric-up'
         }
     },
     /**

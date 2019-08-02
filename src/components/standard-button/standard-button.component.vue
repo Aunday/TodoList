@@ -8,14 +8,12 @@ export default {
         buttonIcon: String,
         disabled: Boolean
     },
-    data() {
-        return {
-            /**
-             * Emits click event for this button
-             */
-            onClick: () => {
-                this.$emit('click', '');
-            }
+    methods: {
+        /**
+         * Emits click event for this button
+         */
+        onClick() {
+            this.$emit('click', '');
         }
     }
 }

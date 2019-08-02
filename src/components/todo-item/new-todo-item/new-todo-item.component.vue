@@ -10,13 +10,15 @@ export default {
     data() {
         return {
             todoItemLabel: 'test',
-            todoItemPriority: 'important',
-            /**
-             * Sends new creation results back out to parent
-             */
-            createNewTodoItem: () => {
-                this.$emit('createNewTodoItem', {label: this.todoItemLabel, priority: this.todoItemPriority});
-            }
+            todoItemPriority: 'important'
+        }
+    },
+    methods: {
+        /**
+         * Sends new creation results back out to parent
+         */
+        createNewTodoItem() {
+            this.$emit('createNewTodoItem', {label: this.todoItemLabel, priority: this.todoItemPriority});
         }
     }
 }
