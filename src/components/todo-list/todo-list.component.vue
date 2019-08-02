@@ -21,15 +21,15 @@ export default {
             todoItems: [
                 {
                     id: 1,
-                    label: 'Get job at ForgeRock',
-                    complete: false,
-                    priority: 'life changing'
-                },
-                {
-                    id: 2,
                     label: 'Complete \'ToDo List\' assignment',
                     complete: false,
                     priority: 'important'
+                },
+                {
+                    id: 2,
+                    label: 'Get job at ForgeRock',
+                    complete: false,
+                    priority: 'life changing'
                 },
                 {
                     id: 3,
@@ -62,12 +62,12 @@ export default {
              * Removes individual todo item
              * @param id - number representing id of todo item to be removed
              */
-            removeItem: id => {
+            removeItem: removeId => {
                 for (let i = this.todoItems.length - 1; i >= 0; i--) {
                     const item = this.todoItems[i];
-                    if (item.id === id) {
+                    if (item.id === removeId) {
                         this.todoItems.splice(i, 1);
-                    } else if (i >= id - 1) {
+                    } else if (item.id > removeId) {
                         item.id--;
                     }
                 }
@@ -126,9 +126,11 @@ export default {
      */
     created: function () {
         this.$cookies.config('30d');
+        // this.$cookies.remove('todoList');
+        // this.$cookies.remove('pageVisited');
         if (this.$cookies.get('pageVisited')) {
             const savedTodoItems = this.$cookies.get('todoList').items;
-            if (savedTodoItems && savedTodoItems.length > 0) {
+            if (savedTodoItems) {
                 this.todoItems = savedTodoItems;
             }
         } else {

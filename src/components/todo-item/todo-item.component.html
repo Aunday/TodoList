@@ -16,7 +16,7 @@
         </div>
     </div>
     <div>
-        <div @click="showPriorityEdit()" v-if="!priorityEditVisible" class="todo-priority" v-bind:class="getPriorityClass(todoItem.priority)">
+        <div @click="showPriorityEdit()" v-if="!priorityEditVisible" class="todo-priority" :class="getPriorityClass(todoItem.priority)">
             {{ todoItem.priority }}
         </div>
         <div v-if="priorityEditVisible">

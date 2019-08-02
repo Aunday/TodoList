@@ -1,4 +1,4 @@
-<div class="button-box" @click="onClick()">
+<div class="button-box" :class="{disabled: disabled}" @click="onClick()">
     <span class="button-icon" v-if="buttonIcon">
         <font-awesome-icon :icon="buttonIcon"></font-awesome-icon>
     </span>

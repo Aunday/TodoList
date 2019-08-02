@@ -5,7 +5,8 @@ export default {
     name: 'AddNewButtonComponent',
     props: {
         buttonLabel: String,
-        buttonIcon: String
+        buttonIcon: String,
+        disabled: Boolean
     },
     data() {
         return {

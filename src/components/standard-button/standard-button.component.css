@@ -5,3 +5,7 @@
     color: white;
     padding: 5px 7px 5px 5px;
 }
+.disabled {
+    background-color: #adb7c0;
+    cursor: default;
+}

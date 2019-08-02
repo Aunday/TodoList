@@ -2,7 +2,7 @@
     <h1>{{ msg }}</h1>
     <div class="list-header-row">
         <StandardButtonComponent title="Add new todo item" buttonIcon="plus" buttonLabel="Add New" @click="showNewTodoItemCreation()"></StandardButtonComponent>
-        <StandardButtonComponent title="Clear all todo items" class="margin-left-5" buttonLabel="Clear All" @click="openClearAllConfirmation()"></StandardButtonComponent>
+        <StandardButtonComponent title="Clear all todo items" :disabled="todoItems.length === 0" class="margin-left-5" buttonLabel="Clear All" @click="openClearAllConfirmation()"></StandardButtonComponent>
         <div class="flex-right">
             <StandardButtonComponent title="Sort by priority" class="margin-left-5" :buttonIcon="getSortIcon()" @click="sortList()"></StandardButtonComponent>
         </div>

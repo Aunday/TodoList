@@ -1,12 +1,15 @@
 .todo-list {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 30px);
 }
 h1 {
     text-align: center;
 }
 .list-container {
-    height: calc(100vh - 160px);
     overflow-y: auto;
+    flex: 1;
 }
 .flex-right {
     flex: 1;
