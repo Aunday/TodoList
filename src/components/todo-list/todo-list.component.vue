@@ -75,12 +75,15 @@ export default {
          * @param newTodoItem - object containing user-specified label & priority
          */
         createNewTodoItem(newTodoItem) {
-            this.todoItems.push({
-                id: this.todoItems.length + 1,
+            for (let i = 0; i < this.todoItems.length; i++) {
+                this.todoItems[i].id++;
+            }
+            this.todoItems.unshift({
+                id: 1,
                 label: newTodoItem.label,
                 complete: false,
                 priority: newTodoItem.priority
-            })
+            });
             this.newTodoItemCreationVisible = false;
             this.$cookies.set('todoList',{items: this.todoItems});
         },
