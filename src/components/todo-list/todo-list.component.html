@@ -1,22 +1,19 @@
 <div class="todo-list">
     <h1>{{ msg }}</h1>
     <div class="list-header-row">
-        <StandardButtonComponent title="Add new todo item" id="add-button" buttonIcon="plus" buttonLabel="Add New" @click="showNewTodoItemCreation()"></StandardButtonComponent>
+        <StandardButtonComponent title="Add new todo item" id="add-button" buttonIcon="plus" buttonLabel="Add New" @click="createNewTodoItem()"></StandardButtonComponent>
         <StandardButtonComponent title="Clear all todo items" :disabled="todoItems.length === 0" class="margin-left-5" buttonLabel="Clear All" @click="openClearAllConfirmation()"></StandardButtonComponent>
         <div class="flex-right">
             <StandardButtonComponent title="Sort by priority" id="sort-button" class="margin-left-5" :buttonIcon="getSortIcon()" @click="sortList()"></StandardButtonComponent>
         </div>
     </div>
-    <NewTodoItemComponent
-        v-if="newTodoItemCreationVisible"
-        @createNewTodoItem="createNewTodoItem">
-    </NewTodoItemComponent>
     <div class="list-container">
         <TodoItemComponent
             v-for="item in todoItems"
             :todoItem="item"
             v-bind:key="item.id"
-            @removeItem="removeItem">
+            @removeItem="removeItem"
+            @saveTodoList="saveTodoList">
         </TodoItemComponent>
     </div>
 </div>

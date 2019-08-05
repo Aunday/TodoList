@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { shallowMount, mount } from '@vue/test-utils';
 import TodoListComponent from '@/components/todo-list/todo-list.component.vue';
 import StandardButtonComponent from '@/components/standard-button/standard-button.component.vue';
-import NewTodoItemComponent from '@/components/todo-item/new-todo-item/new-todo-item.component.vue';
 import * as $cookies from "vue-cookies";
 import TodoItemComponent from '@/components/todo-item/todo-item.component.vue';
 
@@ -30,9 +29,9 @@ describe('todo-list.component.vue', () => {
     });
 
     it('shows new todo item creation upon button click', () => {
-        expect(wrapper.findAll(NewTodoItemComponent).length).to.equal(0);
+        expect(wrapper.findAll(TodoItemComponent).length).to.equal(3);
         wrapper.find("#add-button").trigger('click');
-        expect(wrapper.findAll(NewTodoItemComponent).length).to.equal(1);
+        expect(wrapper.findAll(TodoItemComponent).length).to.equal(4);
     });
 
     it('changes sort from ascending to descending', () => {

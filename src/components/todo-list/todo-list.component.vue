@@ -3,7 +3,6 @@
 <script>
 import TodoItemComponent from '../todo-item/todo-item.component.vue'
 import StandardButtonComponent from '../standard-button/standard-button.component.vue'
-import NewTodoItemComponent from '../todo-item/new-todo-item/new-todo-item.component.vue'
 export default {
     name: 'TodoListComponent',
     props: {
@@ -11,13 +10,11 @@ export default {
     },
     components: {
         TodoItemComponent,
-        StandardButtonComponent,
-        NewTodoItemComponent
+        StandardButtonComponent
     },
     data() {
         return {
             sortAscending: true,
-            newTodoItemCreationVisible: false,
             todoItems: [
                 {
                     id: 1,
@@ -62,13 +59,7 @@ export default {
                 return 0;
             })
             this.sortAscending = !this.sortAscending;
-            this.$cookies.set('todoList',{items: this.todoItems});
-        },
-        /**
-         * Toggles visibility of new todo item creation
-         */
-        showNewTodoItemCreation() {
-            this.newTodoItemCreationVisible = true;
+            this.saveTodoList();
         },
         /**
          * Adds newly created todo item to list
@@ -80,12 +71,13 @@ export default {
             }
             this.todoItems.unshift({
                 id: 1,
-                label: newTodoItem.label,
+                label: 'New Task',
                 complete: false,
-                priority: newTodoItem.priority
+                priority: 'important',
+                labelEditVisible: true,
+                priorityEditVisible: true
             });
-            this.newTodoItemCreationVisible = false;
-            this.$cookies.set('todoList',{items: this.todoItems});
+            this.saveTodoList();
         },
         /**
          * Removes individual todo item
@@ -100,7 +92,7 @@ export default {
                     item.id--;
                 }
             }
-            this.$cookies.set('todoList',{items: this.todoItems});
+            this.saveTodoList();
         },
         /**
          * Opens confirmation modal to ensure user really wants
@@ -111,10 +103,16 @@ export default {
             .confirm('Do you really want to clear all items?')
             .then(() => {
                 this.todoItems = [];
-                this.$cookies.set('todoList',{items: this.todoItems});
+                this.saveTodoList();
             })
             .catch(() => {
             });
+        },
+        /**
+         * Saves current todo item list
+         */
+        saveTodoList() {
+            this.$cookies.set('todoList', {items: this.todoItems});
         },
         /**
          * Returns current sort direction icon
@@ -140,7 +138,7 @@ export default {
             }
         } else {
             this.$cookies.set('pageVisited', true)
-            this.$cookies.set('todoList',{items: this.todoItems});
+            this.saveTodoList();
         }
     }
 }

@@ -30,6 +30,7 @@ export default {
          */
         toggleComplete() {
             this.todoItem.complete = !this.todoItem.complete;
+            this.$emit('saveTodoList');
         },
         /**
          * removes current todo item
@@ -41,21 +42,27 @@ export default {
          * Toggles on visibility of label input field
          */
         showLabelEdit() {
-            this.labelEditVisible = true;
+            this.todoItem.labelEditVisible = true;
         },
         /**
          * Toggles on visibility of priority select field
          */
         showPriorityEdit() {
-            this.priorityEditVisible = true;
+            this.todoItem.priorityEditVisible = true;
         },
         /**
-         * Hides edit fields when focus is removed from input
-         * and select fields
+         * Hides label edit field when focus is removed from input
          */
-        loseFocus() {
-            this.labelEditVisible = false;
-            this.priorityEditVisible = false;
+        labelLoseFocus() {
+            this.todoItem.labelEditVisible = false;
+            this.$emit('saveTodoList');
+        },
+        /**
+         * Hides priority edit field when focus is removed from select field
+         */
+        priorityLoseFocus() {
+            this.todoItem.priorityEditVisible = false;
+            this.$emit('saveTodoList');
         }
     }
 }

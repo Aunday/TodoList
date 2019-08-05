@@ -1,26 +1,26 @@
 <div class="todo-item-box">
-    <div class="complete-icon" @click="toggleComplete()">
+    <div class="complete-icon" @click="toggleComplete()" v-if="!todoItem.labelEditVisible && !todoItem.priorityEditVisible">
         <font-awesome-icon title="Click to mark incomplete" class="color-green" v-if="todoItem.complete" :icon="['far', 'check-square']"></font-awesome-icon>
         <font-awesome-icon title="Click to mark complete" class="color-blue" v-if="!todoItem.complete" :icon="['far', 'square']"></font-awesome-icon>
     </div>
     <div class="todo-label">
-        <div @click="showLabelEdit()" v-if="!labelEditVisible">
+        <div @click="showLabelEdit()" v-if="!todoItem.labelEditVisible">
             {{ todoItem.label }}
         </div>
-        <div v-if="labelEditVisible">
+        <div v-if="todoItem.labelEditVisible">
             <input
                 type="text"
                 v-model="todoItem.label"
                 placeholder="Enter task here"
-                v-on:blur="loseFocus()">
+                v-on:blur="labelLoseFocus()">
         </div>
     </div>
     <div class="priority-pill">
-        <div @click="showPriorityEdit()" v-if="!priorityEditVisible" class="todo-priority" :class="getPriorityClass(todoItem.priority)">
+        <div @click="showPriorityEdit()" v-if="!todoItem.priorityEditVisible" class="todo-priority" :class="getPriorityClass(todoItem.priority)">
             {{ todoItem.priority }}
         </div>
-        <div v-if="priorityEditVisible">
-            <select v-model="todoItem.priority" v-on:blur="loseFocus()">
+        <div v-if="todoItem.priorityEditVisible">
+            <select v-model="todoItem.priority" v-on:blur="priorityLoseFocus()">
                 <option todoItem.priority>life changing</option>
                 <option>important</option>
                 <option>meh</option>
