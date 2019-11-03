@@ -3,7 +3,7 @@
   background-color: #ffffff;
   border: 1px solid #cacaf5;
   display: flex;
-  padding: 20px;
+  padding: 17px 20px 0;
   margin-top: 5px;
 }
 .complete-icon {
@@ -30,6 +30,10 @@
   flex: 1;
   text-align: left;
   position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 5px;
 }
 .type-pill {
   width: 140px;
@@ -42,30 +46,50 @@
   float: right;
 }
 .type-green {
-  background-color: #257e31;
+  background-color: rgb(37, 126, 49);
+}
+.type-green.light {
+  background-color: rgba(37, 126, 49,0.2);
 }
 .type-purple {
-  background-color: #9829a7;
+  background-color: rgb(152,41,167);
+}
+.type-purple.light {
+  background-color: rgba(152,41,167,0.2);
 }
 .type-pink {
-  background-color: #ff58cd;
+  background-color: rgb(255,88,205);
+}
+.type-pink.light {
+  background-color: rgba(255,88,205,0.2);
 }
 .type-red {
-  background-color: #962e27;
+  background-color: rgb(150,46,39);
+}
+.type-red.light {
+  background-color: rgba(150,46,39,0.2);
 }
 .type-yellow {
-  background-color: #ebdd22;
+  background-color: rgb(235, 221, 34);
   color: black;
+}
+.type-yellow.light {
+  background-color: rgba(235, 221, 34, 0.2);
 }
 .type-blue {
-  background-color: #276a96;
+  background-color: rgb(39, 106, 150);
+}
+.type-blue.light {
+  background-color: rgba(39, 106, 150,0.2);
 }
 .type-orange {
-  background-color: #dd7513;
+  background-color: rgb(221,117,19);
   color: black;
 }
+.type-orange.light {
+  background-color: rgba(221,117,19,0.2);
+}
 .remove-task-button {
-  padding: 5px;
-  margin-left: 10px;
+  margin-left: 15px;
   cursor: pointer;
 }

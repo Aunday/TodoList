@@ -9,15 +9,14 @@
       </div>
       <div class="display-flex margin-left-15">
         <div class="flex-1">
-          <select v-model="selectedWeek.value">
+          <!-- <select v-model="selectedWeek.value">
             <option
               v-for="week of weeks"
               v-bind:value="week.id"
               v-bind:key="week.id">
-              <!-- @select="weekSelected($event)" -->
               {{ week.title }}
             </option>
-          </select>
+          </select> -->
           <StandardButtonComponent
             class="margin-left-5"
             title="New Week"
@@ -97,11 +96,7 @@ export default {
     },
     copyWeekSelected(event) {
       this.$emit('createWeek', event);
-      console.log(event);
     },
-    // weekSelected(event) {
-    //   this.$emit('weekSelected', this.selectedWeek.value)
-    // }
   },
 };
 </script>

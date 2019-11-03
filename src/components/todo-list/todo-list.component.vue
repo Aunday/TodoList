@@ -44,7 +44,7 @@
         v-bind:key="todoTask.id"
         @removeTask="removeTask"
         @saveTodoData="saveTodoData"
-        @completeToggled="completeToggled">
+        @countCompleted="countCompleted">
       </TodoTaskComponent>
     </div>
   </div>
@@ -111,7 +111,7 @@ export default {
         typeEditVisible: true,
         dueDateEditVisible: true,
       });
-      this.saveTodoData();
+      this.$emit('countCompleted');
     },
     getTodayDate() {
       const today = new Date();
@@ -130,7 +130,7 @@ export default {
           task.id -= 1;
         }
       }
-      this.saveTodoData();
+      this.$emit('countCompleted');
     },
     /**
      * Opens confirmation modal to ensure user really wants
@@ -141,7 +141,7 @@ export default {
         .confirm('Do you really want to clear all tasks?')
         .then(() => {
           this.todoList.todoTasks = [];
-          this.saveTodoData();
+          this.$emit('countCompleted');
         })
         .catch(() => {
         });
@@ -168,8 +168,8 @@ export default {
     /**
      * emits complete box toggled event
      */
-    completeToggled() {
-      this.$emit('completeToggled');
+    countCompleted() {
+      this.$emit('countCompleted');
     },
     /**
      * Returns current sort direction icon

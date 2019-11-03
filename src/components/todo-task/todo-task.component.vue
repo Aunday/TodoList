@@ -1,5 +1,5 @@
 <template>
-  <div class="todo-task-box">
+  <div class="todo-task-box" :class="getBackgroundClass(todoTask.type)">
     <div
       class="complete-icon"
       @click="toggleComplete()"
@@ -120,6 +120,18 @@ export default {
   mounted() {
   },
   methods: {
+    getBackgroundClass(type) {
+      const classMap = {
+        assignment: 'type-yellow light',
+        reading: 'type-blue light',
+        quiz: 'type-orange light',
+        exam: 'type-red light',
+        webinar: 'type-green light',
+        'forum post': 'type-purple light',
+        'forum reply': 'type-pink light',
+      };
+      return classMap[type];
+    },
     getStandardDate(date) {
       return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     },
@@ -153,7 +165,7 @@ export default {
      */
     toggleComplete() {
       this.todoTask.complete = !this.todoTask.complete;
-      this.$emit('completeToggled');
+      this.$emit('countCompleted');
     },
     /**
      * removes current todo task

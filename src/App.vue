@@ -15,7 +15,8 @@
           class="week-button"
           title="weeks[index].title"
           :buttonLabel="getWeekButtonLabel(index)"
-          buttonColor="getButtonColor(index)"/>
+          :buttonColor="getButtonColor(index)"
+          @click="selectWeek(index)"/>
       </div>
       <div class="todo-lists">
         <div class="week-title">
@@ -36,7 +37,7 @@
             :todoList="todoList"
             :key="todoList.id"
             @saveTodoData="saveTodoData"
-            @completeToggled="completeToggled"/>
+            @countCompleted="countCompleted"/>
         </div>
       </div>
     </div>
@@ -144,6 +145,9 @@ export default {
     };
   },
   methods: {
+    selectWeek(weekIndex) {
+      this.selectedWeek.value = weekIndex;
+    },
     getWeekButtonLabel(weekIndex) {
       const { incompleteCount } = this.weeks[weekIndex];
       if (incompleteCount) {
@@ -153,9 +157,9 @@ export default {
     },
     getButtonColor(weekIndex) {
       if (this.weeks[weekIndex].incompleteCount) {
-        return 'background-color: #292a35';
+        return 'background-color: #378fe2;'; // #dc7634
       }
-      return 'background-color: #333';
+      return 'background-color: #e8e3e0; color: #afa3a3;';
     },
     getTodayDate() {
       const today = new Date();
@@ -197,7 +201,7 @@ export default {
         selectedWeek: this.selectedWeek.value,
       });
     },
-    completeToggled() {
+    countCompleted() {
       for (let i = 0; i < this.weeks.length; i += 1) {
         let incompleteCount = 0;
         for (let j = 0; j < this.weeks[i].todoLists.length; j += 1) {
@@ -209,21 +213,21 @@ export default {
         }
         this.weeks[i].incompleteCount = incompleteCount;
       }
+      this.saveTodoData();
     },
     createWeek(event) {
       const newWeek = cloneDeep(this.weeks[event]);
       // will have to handle this if we start allowing removal
       newWeek.id = this.weeks.length;
       this.weeks.push(newWeek);
-      console.log(this.weeks);
     },
     createCourse() {
-      console.log(this.weeks[this.selectedWeek.value].todoLists);
       this.weeks[this.selectedWeek.value].todoLists.push({
         id: this.weeks[this.selectedWeek.value].todoLists.length,
         title: 'New Course',
         todoTasks: [],
       });
+      this.countCompleted();
     },
   },
   /**
@@ -231,8 +235,8 @@ export default {
    */
   created() {
     this.$cookies.config(Infinity);
-    this.$cookies.remove('todoData');
-    this.$cookies.remove('pageVisited');
+    // this.$cookies.remove('todoData');
+    // this.$cookies.remove('pageVisited');
     if (this.$cookies.get('pageVisited')) {
       const savedTodoData = this.$cookies.get('todoData');
       console.log(savedTodoData);
@@ -244,7 +248,6 @@ export default {
       this.$cookies.set('pageVisited', true);
       this.saveTodoData();
     }
-    // console.log(this.weeks);
   },
 };
 </script>

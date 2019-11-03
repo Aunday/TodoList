@@ -51,3 +51,10 @@ h1 {
 .margin-left-15 {
     margin-left: 15px;
 }
+.week-title {
+  text-align: center;
+}
+.week-button {
+  margin: 5px;
+  padding: 5px 10px !important;
+}
