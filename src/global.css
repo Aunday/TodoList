@@ -7,13 +7,28 @@
 }
 body {
     margin: 0;
-    background-color: #eeeefc;
+    background-color: #fbfbff;
 }
 .float-right {
     float: right;
 }
 .display-flex {
     display: flex;
+}
+.flex-1 {
+  flex: 1;
+}
+h1 {
+    text-align: center;
+}
+.width-20 {
+    width: 20%;
+}
+.app-content {
+  padding: 10px;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 * {
     box-sizing: border-box;
@@ -32,4 +47,7 @@ body {
 }
 .margin-left-5 {
     margin-left: 5px;
+}
+.margin-left-15 {
+    margin-left: 15px;
 }

@@ -1,0 +1,71 @@
+.todo-task-box {
+  height: 60px;
+  background-color: #ffffff;
+  border: 1px solid #cacaf5;
+  display: flex;
+  padding: 20px;
+  margin-top: 5px;
+}
+.complete-icon {
+  cursor: pointer;
+}
+.label-container {
+  display: inline-block;
+  position: relative;
+}
+.crossout-bar {
+  width: 0;
+  border: 1px solid rgba(200,200,200,0);
+  transition: width 1s;
+  height: 0;
+  position: absolute;
+  top: 12px;
+}
+.crossout-bar.active {
+  width: 100%;
+  border: 1px solid rgba(30,30,30,1);
+}
+.todo-label {
+  padding-left: 20px;
+  flex: 1;
+  text-align: left;
+  position: relative;
+}
+.type-pill {
+  width: 140px;
+}
+.todo-type {
+  color: white;
+  height: 25px;
+  padding: 0px 5px 5px 5px;
+  cursor: pointer;
+  float: right;
+}
+.type-green {
+  background-color: #257e31;
+}
+.type-purple {
+  background-color: #9829a7;
+}
+.type-pink {
+  background-color: #ff58cd;
+}
+.type-red {
+  background-color: #962e27;
+}
+.type-yellow {
+  background-color: #ebdd22;
+  color: black;
+}
+.type-blue {
+  background-color: #276a96;
+}
+.type-orange {
+  background-color: #dd7513;
+  color: black;
+}
+.remove-task-button {
+  padding: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}

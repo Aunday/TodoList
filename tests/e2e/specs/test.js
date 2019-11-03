@@ -13,81 +13,81 @@ describe('root tests', () => {
   });
 
   /**
-   * Ensures input number of todo items are rendered
+   * Ensures input number of todo tasks are rendered
    */
-  it('should have three todo items', () => {
+  it('should have three todo tasks', () => {
     cy
       .get('[class=list-container]')
       .children()
-      .should('have.length', 3)
+      .should('have.length', 3);
   });
 
   /**
-   * Test that clicking check mark completes an item
+   * Test that clicking check mark completes an task
    */
   it('should mark complete', () => {
     cy
       .get('[class=complete-icon]')
       .children()
-      .should('have.class', 'fa-square')
+      .should('have.class', 'fa-square');
     cy
       .get('[class=complete-icon]')
-      .click({multiple: true})
+      .click({ multiple: true });
 
     cy
       .get('[class=complete-icon]')
       .children()
-      .should('have.class', 'fa-check-square')
+      .should('have.class', 'fa-check-square');
   });
 
   /**
-   * Test whether 'x' button removes items
+   * Test whether 'x' button removes tasks
    */
-  it('should remove item', () => {
+  it('should remove task', () => {
     cy
       .get('[class=list-container]')
       .children()
-      .should('have.length', 3)
+      .should('have.length', 3);
 
     cy
-      .get('[class=remove-item-button]')
+      .get('[class=remove-task-button]')
       .first()
-      .click()
+      .click();
 
     cy
       .get('[class=list-container]')
       .children()
-      .should('have.length', 2)
+      .should('have.length', 2);
   });
 
   /**
-   * Test sorting functionality based on priority
+   * Test sorting functionality based on type
    */
   it('should sort', () => {
     cy
-      .get('[class=priority-pill]')
+      .get('[class=type-pill]')
       .children()
       .first()
-      .contains('important');
+      .contains('quiz');
 
     cy
       .get('[id=sort-button]')
-      .click()
+      .click();
 
     cy
-      .get('[class=priority-pill]')
+      .get('[class=type-pill]')
       .children()
       .first()
-      .contains('life changing');
+      .contains('exam');
 
     cy
       .get('[id=sort-button]')
-      .click()
+      .click();
 
     cy
-      .get('[class=priority-pill]')
+      .get('[class=type-pill]')
       .children()
       .first()
-      .contains('meh');
+      .contains('assignment');
   });
 });

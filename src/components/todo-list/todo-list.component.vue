@@ -1,145 +1,185 @@
-<template src="./todo-list.component.html"></template>
+<template>
+  <div class="todo-list">
+    <div class="course-title">
+      <div @click="showCourseTitleEdit()" v-if="!courseTitleEdit">
+        {{ todoList.title }}
+      </div>
+      <div v-else>
+        <input
+          type="text"
+          v-model="todoList.title"
+          placeholder="Enter course title"
+          v-on:blur="courseTitleLoseFocus()">
+      </div>
+    </div>
+    <div class="list-header-row">
+      <StandardButtonComponent
+        title="Add new todo task"
+        id="add-button"
+        buttonIcon="plus"
+        buttonLabel="Task"
+        @click="createNewTodoTask()">
+      </StandardButtonComponent>
+      <StandardButtonComponent
+        title="Clear all todo tasks"
+        :disabled="todoList.todoTasks.length === 0"
+        class="margin-left-5"
+        buttonLabel="Clear"
+        @click="openClearAllConfirmation()">
+      </StandardButtonComponent>
+      <div class="flex-right">
+        <StandardButtonComponent
+          title="Sort by type"
+          id="sort-button"
+          class="margin-left-5"
+          :buttonIcon="getSortIcon()"
+          @click="sortList()">
+        </StandardButtonComponent>
+      </div>
+    </div>
+    <div class="list-container">
+      <TodoTaskComponent
+        v-for="todoTask in todoList.todoTasks"
+        :todoTask="todoTask"
+        v-bind:key="todoTask.id"
+        @removeTask="removeTask"
+        @saveTodoData="saveTodoData"
+        @completeToggled="completeToggled">
+      </TodoTaskComponent>
+    </div>
+  </div>
+</template>
 <style scoped src="./todo-list.component.css"></style>
 <script>
-import TodoItemComponent from '../todo-item/todo-item.component.vue'
-import StandardButtonComponent from '../standard-button/standard-button.component.vue'
+
+import TodoTaskComponent from '../todo-task/todo-task.component.vue';
+import StandardButtonComponent from '../standard-button/standard-button.component.vue';
+
 export default {
-    name: 'TodoListComponent',
-    props: {
-        msg: String
-    },
-    components: {
-        TodoItemComponent,
-        StandardButtonComponent
-    },
-    data() {
-        return {
-            sortAscending: true,
-            todoItems: [
-                {
-                    id: 1,
-                    label: 'Complete \'ToDo List\' assignment',
-                    complete: false,
-                    priority: 'important'
-                },
-                {
-                    id: 2,
-                    label: 'Get job at ForgeRock',
-                    complete: false,
-                    priority: 'life changing'
-                },
-                {
-                    id: 3,
-                    label: 'Relax',
-                    complete: false,
-                    priority: 'meh'
-                }
-            ]
-        };
-    },
-    methods: {
-        /**
-         * Sorts list based on priority, asc or desc based on button icon
-         */
-        sortList() {
-            const priorityMap = {
-                'life changing': 1,
-                'important': 2,
-                'meh': 3
-            };
-            this.todoItems.sort((a, b) => {
-                const aPriority = priorityMap[a.priority];
-                const bPriority = priorityMap[b.priority];
-                if ((this.sortAscending && aPriority > bPriority) || (!this.sortAscending && aPriority < bPriority)) {
-                    return 1;
-                }
-                if ((this.sortAscending && bPriority > aPriority) || (!this.sortAscending && bPriority < aPriority)) {
-                    return -1;
-                }
-                return 0;
-            })
-            this.sortAscending = !this.sortAscending;
-            this.saveTodoList();
-        },
-        /**
-         * Adds newly created todo item to list
-         * @param newTodoItem - object containing user-specified label & priority
-         */
-        createNewTodoItem(newTodoItem) {
-            for (let i = 0; i < this.todoItems.length; i++) {
-                this.todoItems[i].id++;
-            }
-            this.todoItems.unshift({
-                id: 1,
-                label: 'New Task',
-                complete: false,
-                priority: 'important',
-                labelEditVisible: true,
-                priorityEditVisible: true
-            });
-            this.saveTodoList();
-        },
-        /**
-         * Removes individual todo item
-         * @param id - number representing id of todo item to be removed
-         */
-        removeItem(removeId) {
-            for (let i = this.todoItems.length - 1; i >= 0; i--) {
-                const item = this.todoItems[i];
-                if (item.id === removeId) {
-                    this.todoItems.splice(i, 1);
-                } else if (item.id > removeId) {
-                    item.id--;
-                }
-            }
-            this.saveTodoList();
-        },
-        /**
-         * Opens confirmation modal to ensure user really wants
-         * to delete all todo items
-         */
-        openClearAllConfirmation() {
-            this.$dialog
-            .confirm('Do you really want to clear all items?')
-            .then(() => {
-                this.todoItems = [];
-                this.saveTodoList();
-            })
-            .catch(() => {
-            });
-        },
-        /**
-         * Saves current todo item list
-         */
-        saveTodoList() {
-            this.$cookies.set('todoList', {items: this.todoItems});
-        },
-        /**
-         * Returns current sort direction icon
-         */
-        getSortIcon() {
-            if (this.sortAscending) {
-                return 'sort-numeric-down'
-            }
-            return 'sort-numeric-up'
+  name: 'TodoListComponent',
+  props: {
+    todoList: Object,
+  },
+  components: {
+    TodoTaskComponent,
+    StandardButtonComponent,
+  },
+  data: () => ({
+    sortAscending: true,
+    courseTitleEdit: false,
+  }),
+  methods: {
+    /**
+     * Sorts list based on type, asc or desc based on button icon
+     */
+    sortList() {
+      const typeMap = {
+        exam: 1,
+        quiz: 2,
+        assignment: 3,
+        webinar: 4,
+        reading: 5,
+      };
+      this.todoList.todoTasks.sort((a, b) => {
+        const aType = typeMap[a.type];
+        const bType = typeMap[b.type];
+        if ((this.sortAscending && aType > bType) || (!this.sortAscending && aType < bType)) {
+          return 1;
         }
+        if ((this.sortAscending && bType > aType) || (!this.sortAscending && bType < aType)) {
+          return -1;
+        }
+        return 0;
+      });
+      this.sortAscending = !this.sortAscending;
+      this.saveTodoData();
     },
     /**
-     * Initializes cookies and loads list if previously used app
+     * Adds new todo task to list
      */
-    created: function () {
-        this.$cookies.config('30d');
-        // this.$cookies.remove('todoList');
-        // this.$cookies.remove('pageVisited');
-        if (this.$cookies.get('pageVisited')) {
-            const savedTodoItems = this.$cookies.get('todoList').items;
-            if (savedTodoItems) {
-                this.todoItems = savedTodoItems;
-            }
-        } else {
-            this.$cookies.set('pageVisited', true)
-            this.saveTodoList();
+    createNewTodoTask() {
+      for (let i = 0; i < this.todoList.todoTasks.length; i += 1) {
+        this.todoList.todoTasks[i].id += 1;
+      }
+      this.todoList.todoTasks.unshift({
+        id: 1,
+        label: 'New Task',
+        complete: false,
+        dueDate: this.getTodayDate(),
+        type: 'assignment',
+        labelEditVisible: true,
+        typeEditVisible: true,
+        dueDateEditVisible: true,
+      });
+      this.saveTodoData();
+    },
+    getTodayDate() {
+      const today = new Date();
+      return `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+    },
+    /**
+     * Removes individual todo task
+     * @param id - number representing id of todo task to be removed
+     */
+    removeTask(removeId) {
+      for (let i = this.todoList.todoTasks.length - 1; i >= 0; i -= 1) {
+        const task = this.todoList.todoTasks[i];
+        if (task.id === removeId) {
+          this.todoList.todoTasks.splice(i, 1);
+        } else if (task.id > removeId) {
+          task.id -= 1;
         }
-    }
-}
+      }
+      this.saveTodoData();
+    },
+    /**
+     * Opens confirmation modal to ensure user really wants
+     * to delete all todo tasks
+     */
+    openClearAllConfirmation() {
+      this.$dialog
+        .confirm('Do you really want to clear all tasks?')
+        .then(() => {
+          this.todoList.todoTasks = [];
+          this.saveTodoData();
+        })
+        .catch(() => {
+        });
+    },
+    /**
+     * Toggles on visibility of course title edit field
+     */
+    showCourseTitleEdit() {
+      this.courseTitleEdit = !this.courseTitleEdit;
+    },
+    /**
+     * Hides course title edit field when focus is removed from input
+     */
+    courseTitleLoseFocus() {
+      this.showCourseTitleEdit();
+      this.$emit('saveTodoData');
+    },
+    /**
+     * Saves current todo task list
+     */
+    saveTodoData() {
+      this.$emit('saveTodoData');
+    },
+    /**
+     * emits complete box toggled event
+     */
+    completeToggled() {
+      this.$emit('completeToggled');
+    },
+    /**
+     * Returns current sort direction icon
+     */
+    getSortIcon() {
+      if (this.sortAscending) {
+        return 'sort-numeric-down';
+      }
+      return 'sort-numeric-up';
+    },
+  },
+};
 </script>
