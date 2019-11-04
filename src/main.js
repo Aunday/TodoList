@@ -11,6 +11,12 @@ import VuejsDialog from 'vuejs-dialog';
 import VueCookies from 'vue-cookies';
 import App from './App.vue';
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
+import Amplify, * as AmplifyModules from 'aws-amplify'
+import { AmplifyPlugin } from 'aws-amplify-vue'
+import awsconfig from './aws-exports'
+Amplify.configure(awsconfig)
+
+Vue.use(AmplifyPlugin, AmplifyModules)
 
 library.add(faThList, faCheckSquare, faSquare, faTimes, faPlus, faSortNumericUp, faSortNumericDown);
 

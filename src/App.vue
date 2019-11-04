@@ -51,6 +51,7 @@ import { cloneDeep } from 'lodash';
 import TodoListComponent from './components/todo-list/todo-list.component.vue';
 import HeaderBarComponent from './components/header-bar/header-bar.component.vue';
 import StandardButtonComponent from './components/standard-button/standard-button.component.vue';
+import { components } from 'aws-amplify-vue'
 
 Vue.use(ModalPlugin);
 export default {
@@ -59,6 +60,7 @@ export default {
     TodoListComponent,
     HeaderBarComponent,
     StandardButtonComponent,
+    components
   },
   data() {
     return {
