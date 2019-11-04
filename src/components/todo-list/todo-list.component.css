@@ -1,10 +1,10 @@
 .todo-list {
-  padding: 10px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 30px);
+  height: calc(100vh - 157px);
   flex: 1;
-  min-width: 350px;
+  min-width: 450px;
 }
 h1 {
   text-align: center;

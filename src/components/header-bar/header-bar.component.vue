@@ -109,6 +109,8 @@ export default {
   display: flex;
   color: white;
   padding: 3px 7px;
+  position: fixed;
+  z-index: 1;
 }
 .title-bar-left {
   display: flex;

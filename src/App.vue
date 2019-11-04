@@ -31,7 +31,7 @@
               v-on:blur="weekTitleLoseFocus()">
           </div>
         </div>
-        <div class="display-flex">
+        <div class="display-flex todo-list-columns">
           <TodoListComponent
             v-for="todoList in weeks[selectedWeek.value].todoLists"
             :todoList="todoList"

@@ -25,7 +25,12 @@ h1 {
     width: 20%;
 }
 .app-content {
-  padding: 10px;
+    padding-top: 40px;
+}
+.todo-list-columns {
+    width: 100%;
+    overflow: auto;
+    height: calc(100vh - 140px);
 }
 .cursor-pointer {
   cursor: pointer;

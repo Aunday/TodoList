@@ -20,7 +20,7 @@
     <div class="todo-label">
       <div v-if="!todoTask.labelEditVisible">
         <span class="cursor-pointer" @click="toggleLabelEdit(true)">
-          <div class="label-container">
+          <div class="label-container" :title="todoTask.label">
             <div :class="{'active': todoTask.complete}" class="crossout-bar"></div>
             {{ todoTask.label }}
           </div>
