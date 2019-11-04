@@ -13,10 +13,10 @@ import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 import API from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
 import App from './App.vue';
-import awsconfig from './aws-exports';
+import awsmobile from './aws-exports';
 
-API.configure(awsconfig);
-PubSub.configure(awsconfig);
+API.configure(awsmobile);
+PubSub.configure(awsmobile);
 
 Vue.config.productionTip = false;
 // import { Amplify } from 'aws-amplify'
