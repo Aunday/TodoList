@@ -4,7 +4,7 @@
 // import StandardButtonComponent from '@/components/standard-button/standard-button.component.vue';
 // import TodoTaskComponent from '@/components/todo-task/todo-task.component.vue';
 
-describe('todo-list.component.vue', () => {
+// describe('todo-list.component.vue', () => {
   // let wrapper;
   // const msg = 'Your Amazing ToDo List';
   // before(() => {
@@ -38,7 +38,7 @@ describe('todo-list.component.vue', () => {
   //   wrapper.find('#sort-button').trigger('click');
   //   // expect(wrapper.vm.sortAscending()).to.be.false;
   // });
-});
+// });
 
 // describe('todo-task.component.vue', () => {
 //   it('changes completion from false to true', () => {
