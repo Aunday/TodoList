@@ -24,7 +24,7 @@
     "core-js": "^2.6.5",
     "eslint-plugin-cypress": "^2.7.0",
     "graphql": "^14.5.8",
-    "lodash": "^1.0.0",
+    "lodash": "^4.17.13",
     "vue": "^2.6.10",
     "vue-bootstrap-datetimepicker": "^5.0.1",
     "vue-cookies": "^1.5.13",
