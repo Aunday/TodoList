@@ -41,6 +41,7 @@
         </div>
       </div>
     </div>
+    <!-- <button @click="createNewTodo">Add Todo</button> -->
   </div>
 </template>
 <style src="./global.css"></style>
@@ -51,7 +52,12 @@ import { cloneDeep } from 'lodash';
 import TodoListComponent from './components/todo-list/todo-list.component.vue';
 import HeaderBarComponent from './components/header-bar/header-bar.component.vue';
 import StandardButtonComponent from './components/standard-button/standard-button.component.vue';
-import { components } from 'aws-amplify-vue'
+// import { components } from 'aws-amplify-vue'
+import API, {  graphqlOperation } from '@aws-amplify/api';
+// eslint-disable-next-line
+import { createTodo, updateTodo, deleteTodo } from "./graphql/mutations";
+import { listTodos } from './graphql/queries'
+import { find } from 'lodash';
 
 Vue.use(ModalPlugin);
 export default {
@@ -60,7 +66,7 @@ export default {
     TodoListComponent,
     HeaderBarComponent,
     StandardButtonComponent,
-    components
+    // components
   },
   data() {
     return {
@@ -144,9 +150,27 @@ export default {
         },
       ],
       selectedWeek: { value: 0 },
+      todos: []
     };
   },
   methods: {
+    async createNewTodo(){
+      const todo = { name: "AndreaData", data: JSON.stringify(this.weeks)};
+      await API.graphql(graphqlOperation(createTodo, { input: todo }));
+    },
+    async updateTodo(){
+      const todo = { name: "AndreaData", data: JSON.stringify(this.weeks)};
+      await API.graphql(graphqlOperation(updateTodo, { input: todo }));
+    },
+    async getData(){
+      const todoData = await API.graphql(graphqlOperation(listTodos));
+      console.log(todoData.data.listTodos.items);
+      const todoResult = find(todoData.data.listTodos.items, (todo) => {
+        return todo.name === 'AndreaData';
+      })
+      console.log(todoResult);
+      this.weeks = JSON.parse(todoResult.data);
+    },
     selectWeek(weekIndex) {
       this.selectedWeek.value = weekIndex;
     },
@@ -197,11 +221,15 @@ export default {
      *  ]
      * }
      */
-    saveTodoData() {
-      this.$cookies.set('todoData', {
-        weeks: this.weeks,
-        selectedWeek: this.selectedWeek.value,
-      });
+    async saveTodoData() {
+      // this.$cookies.set('todoData', {
+      //   weeks: this.weeks,
+      //   selectedWeek: this.selectedWeek.value,
+      // });
+      const data = JSON.stringify(this.weeks);
+      console.log('saving: ', data);
+      const todo = { id: "b57b2db5-1335-42d0-b8b1-c439e38bcbe1", name: "AndreaData", data: data};
+      await API.graphql(graphqlOperation(updateTodo, { input: todo }));
     },
     countCompleted() {
       for (let i = 0; i < this.weeks.length; i += 1) {
@@ -236,20 +264,21 @@ export default {
    * Initializes cookies and loads list if previously used app
    */
   created() {
-    this.$cookies.config(Infinity);
+    this.getData();
+    // this.$cookies.config(Infinity);
     // this.$cookies.remove('todoData');
     // this.$cookies.remove('pageVisited');
-    if (this.$cookies.get('pageVisited')) {
-      const savedTodoData = this.$cookies.get('todoData');
-      console.log(savedTodoData);
-      if (savedTodoData) {
-        this.weeks = savedTodoData.weeks;
-        this.selectedWeek.value = savedTodoData.selectedWeek;
-      }
-    } else {
-      this.$cookies.set('pageVisited', true);
-      this.saveTodoData();
-    }
+    // if (this.$cookies.get('pageVisited')) {
+    //   const savedTodoData = this.$cookies.get('todoData');
+    //   console.log(savedTodoData);
+    //   if (savedTodoData) {
+    //     this.weeks = savedTodoData.weeks;
+    //     this.selectedWeek.value = savedTodoData.selectedWeek;
+    //   }
+    // } else {
+    //   this.$cookies.set('pageVisited', true);
+    //   this.saveTodoData();
+    // }
   },
 };
 </script>
