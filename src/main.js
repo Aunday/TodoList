@@ -17,7 +17,6 @@ import awsmobile from './aws-exports';
 
 API.configure(awsmobile);
 PubSub.configure(awsmobile);
-
 Vue.config.productionTip = false;
 // import { Amplify } from 'aws-amplify'
 // import { AmplifyPlugin } from 'aws-amplify-vue'
