@@ -5,11 +5,15 @@
 			"providerPlugin": "awscloudformation",
 			"output": {
 				"authConfig": {
-					"additionalAuthenticationProviders": [],
+					"additionalAuthenticationProviders": [
+						{
+							"authenticationType": "AWS_IAM"
+						}
+					],
 					"defaultAuthentication": {
 						"authenticationType": "API_KEY",
 						"apiKeyConfig": {
-							"description": "saveUserData",
+							"description": "todo_api",
 							"apiKeyExpirationDays": "365"
 						}
 					}
@@ -17,17 +21,6 @@
 			}
 		}
 	},
-	"auth": {
-		"todolistb0ad51ac": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": []
-		}
-	},
-	"storage": {
-		"friendly": {
-			"service": "S3",
-			"providerPlugin": "awscloudformation"
-		}
-	}
+	"auth": {},
+	"storage": {}
 }
