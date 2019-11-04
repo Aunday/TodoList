@@ -15,14 +15,14 @@ import PubSub from '@aws-amplify/pubsub';
 import App from './App.vue';
 import awsmobile from './aws-exports';
 
+Vue.config.productionTip = false;
+import Amplify, { Storage } from 'aws-amplify';
 API.configure(awsmobile);
 PubSub.configure(awsmobile);
-Vue.config.productionTip = false;
-// import { Amplify } from 'aws-amplify'
 // import { AmplifyPlugin } from 'aws-amplify-vue'
 // import awsconfig from './aws-exports'
 // Amplify.configure(awsconfig)
-
+Vue.use(Amplify,Storage);
 // Vue.use(AmplifyPlugin, AmplifyModules)
 
 library.add(faThList, faCheckSquare, faSquare, faTimes, faPlus, faSortNumericUp, faSortNumericDown);

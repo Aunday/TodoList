@@ -9,6 +9,11 @@
             "UnauthRoleName": "amplify-todo-list-test-165226-unauthRole",
             "StackName": "amplify-todo-list-test-165226",
             "StackId": "arn:aws:cloudformation:us-west-2:674663276887:stack/amplify-todo-list-test-165226/5e331f40-fe9d-11e9-bf30-020934000518"
+        },
+        "categories": {
+            "auth": {
+                "todolistb0ad51ac": {}
+            }
         }
     }
 }
