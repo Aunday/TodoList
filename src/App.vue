@@ -48,16 +48,16 @@
 <script>
 import Vue from 'vue';
 import { ModalPlugin } from 'bootstrap-vue';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, find } from 'lodash';
+import API, { graphqlOperation } from '@aws-amplify/api';
 import TodoListComponent from './components/todo-list/todo-list.component.vue';
 import HeaderBarComponent from './components/header-bar/header-bar.component.vue';
 import StandardButtonComponent from './components/standard-button/standard-button.component.vue';
 // import { components } from 'aws-amplify-vue'
-import API, {  graphqlOperation } from '@aws-amplify/api';
 // eslint-disable-next-line
 import { createTodo, updateTodo, deleteTodo } from "./graphql/mutations";
-import { listTodos } from './graphql/queries'
-import { find } from 'lodash';
+import { listTodos } from './graphql/queries';
+
 
 Vue.use(ModalPlugin);
 export default {
@@ -150,24 +150,22 @@ export default {
         },
       ],
       selectedWeek: { value: 0 },
-      todos: []
+      todos: [],
     };
   },
   methods: {
-    async createNewTodo(){
-      const todo = { name: "AndreaData", data: JSON.stringify(this.weeks)};
+    async createNewTodo() {
+      const todo = { name: 'AndreaData', data: JSON.stringify(this.weeks) };
       await API.graphql(graphqlOperation(createTodo, { input: todo }));
     },
-    async updateTodo(){
-      const todo = { name: "AndreaData", data: JSON.stringify(this.weeks)};
+    async updateTodo() {
+      const todo = { name: 'AndreaData', data: JSON.stringify(this.weeks) };
       await API.graphql(graphqlOperation(updateTodo, { input: todo }));
     },
-    async getData(){
+    async getData() {
       const todoData = await API.graphql(graphqlOperation(listTodos));
       console.log(todoData.data.listTodos.items);
-      const todoResult = find(todoData.data.listTodos.items, (todo) => {
-        return todo.name === 'AndreaData';
-      })
+      const todoResult = find(todoData.data.listTodos.items, todo => todo.name === 'AndreaData');
       console.log(todoResult);
       this.weeks = JSON.parse(todoResult.data);
     },
@@ -228,7 +226,7 @@ export default {
       // });
       const data = JSON.stringify(this.weeks);
       console.log('saving: ', data);
-      const todo = { id: "b57b2db5-1335-42d0-b8b1-c439e38bcbe1", name: "AndreaData", data: data};
+      const todo = { id: 'b57b2db5-1335-42d0-b8b1-c439e38bcbe1', name: 'AndreaData', data };
       await API.graphql(graphqlOperation(updateTodo, { input: todo }));
     },
     countCompleted() {

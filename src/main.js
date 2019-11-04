@@ -9,15 +9,16 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VuejsDialog from 'vuejs-dialog';
 import VueCookies from 'vue-cookies';
-import App from './App.vue';
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 import API from '@aws-amplify/api';
 import PubSub from '@aws-amplify/pubsub';
+import App from './App.vue';
 import awsconfig from './aws-exports';
+
 API.configure(awsconfig);
 PubSub.configure(awsconfig);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 // import { Amplify } from 'aws-amplify'
 // import { AmplifyPlugin } from 'aws-amplify-vue'
 // import awsconfig from './aws-exports'
