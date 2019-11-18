@@ -252,7 +252,7 @@ export default {
       const data = JSON.stringify(this.weeks);
       console.log('saving: ', data);
       const todo = { id: 'b57b2db5-1335-42d0-b8b1-c439e38bcbe1', name: 'AndreaData', data };
-      // await API.graphql(graphqlOperation(updateTodo, { input: todo }));
+      await API.graphql(graphqlOperation(updateTodo, { input: todo }));
     },
     countCompleted() {
       for (let i = 0; i < this.weeks.length; i += 1) {
