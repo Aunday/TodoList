@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faThList, faTimes, faPlus, faSortNumericUp, faSortNumericDown,
+  faThList, faTimes, faPlus, faSortNumericUp, faSortNumericDown, faHeart, faAngleLeft, faAngleRight
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -25,7 +25,18 @@ PubSub.configure(awsmobile);
 Vue.use(Amplify,Storage);
 // Vue.use(AmplifyPlugin, AmplifyModules)
 
-library.add(faThList, faCheckSquare, faSquare, faTimes, faPlus, faSortNumericUp, faSortNumericDown);
+library.add(
+  faThList,
+  faCheckSquare,
+  faSquare,
+  faTimes,
+  faPlus,
+  faSortNumericUp,
+  faSortNumericDown,
+  faHeart,
+  faAngleLeft,
+  faAngleRight
+);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(VuejsDialog);

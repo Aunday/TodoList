@@ -2,7 +2,7 @@
   <div class="header-bar display-flex">
     <span class="title-bar-left flex-1">
       <div class="app-logo">
-        <font-awesome-icon icon="th-list"></font-awesome-icon>
+        <font-awesome-icon icon="heart"></font-awesome-icon>
       </div>
       <div class="app-title">
         {{ appTitle }}

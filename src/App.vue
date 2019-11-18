@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <HeaderBarComponent
-      appTitle="ToDo List"
-      welcomeMessage="Welcome"
+      appTitle="Andrea's Assistant"
+      welcomeMessage="You are amazing Love"
       :weeks="weeks"
       :selectedWeek="selectedWeek"
       @createCourse="createCourse()"
@@ -36,6 +36,9 @@
             v-for="todoList in weeks[selectedWeek.value].todoLists"
             :todoList="todoList"
             :key="todoList.id"
+            :course-count="weeks[selectedWeek.value].todoLists.length"
+            @moveCourse="moveCourse"
+            @removeCourse="removeCourse"
             @saveTodoData="saveTodoData"
             @countCompleted="countCompleted"/>
         </div>
@@ -158,10 +161,10 @@ export default {
       const todo = { name: 'AndreaData', data: JSON.stringify(this.weeks) };
       await API.graphql(graphqlOperation(createTodo, { input: todo }));
     },
-    async updateTodo() {
-      const todo = { name: 'AndreaData', data: JSON.stringify(this.weeks) };
-      await API.graphql(graphqlOperation(updateTodo, { input: todo }));
-    },
+    // async updateTodo() {
+    //   const todo = { name: 'AndreaData', data: JSON.stringify(this.weeks) };
+    //   await API.graphql(graphqlOperation(updateTodo, { input: todo }));
+    // },
     async getData() {
       const todoData = await API.graphql(graphqlOperation(listTodos));
       console.log(todoData.data.listTodos.items);
@@ -188,6 +191,28 @@ export default {
     getTodayDate() {
       const today = new Date();
       return `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+    },
+    moveCourse(params) {
+      console.log()
+      const todoLists = this.weeks[this.selectedWeek.value].todoLists;
+      const movingCourse = todoLists.splice(params.id, 1)[0];
+      todoLists.splice(params.id + params.direction, 0, movingCourse);
+      todoLists[params.id + params.direction].id += params.direction;
+      todoLists[params.id].id -= params.direction;
+    },
+    removeCourse(courseId) {
+      this.$dialog
+      .confirm('Do you really want to remove this course?')
+      .then(() => {
+        const todoLists = this.weeks[this.selectedWeek.value].todoLists;
+        todoLists.splice(courseId, 1);
+        for (let i = courseId; i < todoLists.length; i++) {
+          todoLists[i].id--;
+        }
+        this.countCompleted();
+      })
+      .catch(() => {
+      });
     },
     /**
      * Toggles on visibility of week title edit field
@@ -227,7 +252,7 @@ export default {
       const data = JSON.stringify(this.weeks);
       console.log('saving: ', data);
       const todo = { id: 'b57b2db5-1335-42d0-b8b1-c439e38bcbe1', name: 'AndreaData', data };
-      await API.graphql(graphqlOperation(updateTodo, { input: todo }));
+      // await API.graphql(graphqlOperation(updateTodo, { input: todo }));
     },
     countCompleted() {
       for (let i = 0; i < this.weeks.length; i += 1) {

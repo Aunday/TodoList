@@ -20,13 +20,6 @@
         buttonLabel="Task"
         @click="createNewTodoTask()">
       </StandardButtonComponent>
-      <StandardButtonComponent
-        title="Clear all todo tasks"
-        :disabled="todoList.todoTasks.length === 0"
-        class="margin-left-5"
-        buttonLabel="Clear"
-        @click="openClearAllConfirmation()">
-      </StandardButtonComponent>
       <div class="flex-right">
         <StandardButtonComponent
           title="Sort by type"
@@ -35,6 +28,34 @@
           :buttonIcon="getSortIcon()"
           @click="sortList()">
         </StandardButtonComponent>
+        <span class="icon-button" @click="moveCourseLeft()" v-if="todoList.id > 0">
+          <font-awesome-icon
+            title="Click to move left"
+            class="color-blue"
+            :icon="['fa', 'angle-left']">
+          </font-awesome-icon>
+        </span>
+        <span class="icon-button" @click="moveCourseRight()" v-if="todoList.id < courseCount - 1">
+          <font-awesome-icon
+            title="Click to move right"
+            class="color-blue"
+            :icon="['fa', 'angle-right']">
+          </font-awesome-icon>
+        </span>
+        <span class="icon-button" @click="removeCourse()">
+          <font-awesome-icon
+            title="Click to remove course"
+            class="color-red"
+            :icon="['fa', 'times']">
+          </font-awesome-icon>
+        </span>
+        <!-- <StandardButtonComponent
+          title="Clear all todo tasks"
+          :disabled="todoList.todoTasks.length === 0"
+          class="margin-left-5"
+          buttonLabel="Clear"
+          @click="openClearAllConfirmation()">
+        </StandardButtonComponent> -->
       </div>
     </div>
     <div class="list-container">
@@ -49,16 +70,18 @@
     </div>
   </div>
 </template>
-<style scoped src="./todo-list.component.css"></style>
 <script>
 
 import TodoTaskComponent from '../todo-task/todo-task.component.vue';
 import StandardButtonComponent from '../standard-button/standard-button.component.vue';
-
 export default {
   name: 'TodoListComponent',
   props: {
     todoList: Object,
+    courseCount: {
+      type: Number,
+      default: 0,
+    }
   },
   components: {
     TodoTaskComponent,
@@ -76,9 +99,12 @@ export default {
       const typeMap = {
         exam: 1,
         quiz: 2,
-        assignment: 3,
-        webinar: 4,
-        reading: 5,
+        essay: 3,
+        assignment: 4,
+        webinar: 5,
+        reading: 6,
+        'forum post': 7,
+        'forum reply': 8
       };
       this.todoList.todoTasks.sort((a, b) => {
         const aType = typeMap[a.type];
@@ -108,14 +134,23 @@ export default {
         dueDate: this.getTodayDate(),
         type: 'assignment',
         labelEditVisible: true,
-        typeEditVisible: true,
-        dueDateEditVisible: true,
+        typeEditVisible: false,
+        dueDateEditVisible: false,
       });
       this.$emit('countCompleted');
     },
     getTodayDate() {
       const today = new Date();
       return `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+    },
+    moveCourseLeft() {
+      this.$emit('moveCourse', {id: this.todoList.id, direction: -1});
+    },
+    moveCourseRight() {
+      this.$emit('moveCourse', {id: this.todoList.id, direction: 1});
+    },
+    removeCourse() {
+      this.$emit('removeCourse', this.todoList.id);
     },
     /**
      * Removes individual todo task
@@ -183,3 +218,37 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.todo-list {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 157px);
+  flex: 1;
+  min-width: 450px;
+}
+h1 {
+  text-align: center;
+}
+.list-container {
+  overflow-y: auto;
+  flex: 1;
+}
+.flex-right {
+  flex: 1;
+  text-align: right;
+}
+.list-header-row {
+  display: flex;
+}
+.course-title {
+  text-align: center;
+  font-weight: bold;
+}
+.icon-button {
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+</style>
