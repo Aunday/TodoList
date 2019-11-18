@@ -193,12 +193,12 @@ export default {
       return `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
     },
     moveCourse(params) {
-      console.log()
       const todoLists = this.weeks[this.selectedWeek.value].todoLists;
       const movingCourse = todoLists.splice(params.id, 1)[0];
       todoLists.splice(params.id + params.direction, 0, movingCourse);
       todoLists[params.id + params.direction].id += params.direction;
       todoLists[params.id].id -= params.direction;
+      this.saveTodoData();
     },
     removeCourse(courseId) {
       this.$dialog
