@@ -78,24 +78,24 @@ export default {
         {
           id: 0,
           title: 'Week 1',
-          incompleteCount: 3,
+          incompleteCount: 1,
           todoLists: [
             {
               id: 0,
-              title: 'London',
+              title: 'Class Name',
               todoTasks: [
+                // {
+                //   id: 1,
+                //   label: 'Complete chapter 3 assignment',
+                //   complete: false,
+                //   type: 'assignment',
+                //   dueDate: this.getTodayDate(),
+                //   labelEditVisible: false,
+                //   typeEditVisible: false,
+                //   dueDateEditVisible: false,
+                // },
                 {
                   id: 1,
-                  label: 'Complete chapter 3 assignment',
-                  complete: false,
-                  type: 'assignment',
-                  dueDate: this.getTodayDate(),
-                  labelEditVisible: false,
-                  typeEditVisible: false,
-                  dueDateEditVisible: false,
-                },
-                {
-                  id: 2,
                   label: 'Read chapter 3',
                   complete: false,
                   type: 'reading',
@@ -104,53 +104,53 @@ export default {
                   typeEditVisible: false,
                   dueDateEditVisible: false,
                 },
-                {
-                  id: 3,
-                  label: 'London Webinar',
-                  complete: false,
-                  type: 'webinar',
-                  dueDate: this.getTodayDate(),
-                  labelEditVisible: false,
-                  typeEditVisible: false,
-                  dueDateEditVisible: false,
-                },
+                // {
+                //   id: 3,
+                //   label: 'London Webinar',
+                //   complete: false,
+                //   type: 'webinar',
+                //   dueDate: this.getTodayDate(),
+                //   labelEditVisible: false,
+                //   typeEditVisible: false,
+                //   dueDateEditVisible: false,
+                // },
               ],
             },
           ],
         },
-        {
-          id: 1,
-          title: 'Week 2',
-          incompleteCount: 2,
-          todoLists: [
-            {
-              id: 0,
-              title: 'London',
-              todoTasks: [
-                {
-                  id: 1,
-                  label: 'Complete chapter 3 assignment',
-                  complete: false,
-                  type: 'assignment',
-                  dueDate: this.getTodayDate(),
-                  labelEditVisible: false,
-                  typeEditVisible: false,
-                  dueDateEditVisible: false,
-                },
-                {
-                  id: 2,
-                  label: 'Read chapter 3',
-                  complete: false,
-                  type: 'reading',
-                  dueDate: this.getTodayDate(),
-                  labelEditVisible: false,
-                  typeEditVisible: false,
-                  dueDateEditVisible: false,
-                },
-              ],
-            },
-          ],
-        },
+        // {
+        //   id: 1,
+        //   title: 'Week 2',
+        //   incompleteCount: 2,
+        //   todoLists: [
+        //     {
+        //       id: 0,
+        //       title: 'London',
+        //       todoTasks: [
+        //         {
+        //           id: 1,
+        //           label: 'Complete chapter 3 assignment',
+        //           complete: false,
+        //           type: 'assignment',
+        //           dueDate: this.getTodayDate(),
+        //           labelEditVisible: false,
+        //           typeEditVisible: false,
+        //           dueDateEditVisible: false,
+        //         },
+        //         {
+        //           id: 2,
+        //           label: 'Read chapter 3',
+        //           complete: false,
+        //           type: 'reading',
+        //           dueDate: this.getTodayDate(),
+        //           labelEditVisible: false,
+        //           typeEditVisible: false,
+        //           dueDateEditVisible: false,
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
       ],
       selectedWeek: { value: 0 },
       todos: [],
@@ -167,9 +167,9 @@ export default {
     // },
     async getData() {
       const todoData = await API.graphql(graphqlOperation(listTodos));
-      console.log(todoData.data.listTodos.items);
+      // console.log(todoData.data.listTodos.items);
       const todoResult = find(todoData.data.listTodos.items, todo => todo.name === 'AndreaData');
-      console.log(todoResult);
+      // console.log(todoResult);
       this.weeks = JSON.parse(todoResult.data);
     },
     selectWeek(weekIndex) {
@@ -183,8 +183,11 @@ export default {
       return this.weeks[weekIndex].title;
     },
     getButtonColor(weekIndex) {
+      if (weekIndex === this.selectedWeek.value) {
+        return 'background-color: #378fe2;';
+      }
       if (this.weeks[weekIndex].incompleteCount) {
-        return 'background-color: #378fe2;'; // #dc7634
+        return 'background-color: #a2c9e6; color: #333;'; // #dc7634
       }
       return 'background-color: #e8e3e0; color: #afa3a3;';
     },
@@ -193,7 +196,7 @@ export default {
       return `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
     },
     moveCourse(params) {
-      const todoLists = this.weeks[this.selectedWeek.value].todoLists;
+      const { todoLists } = this.weeks[this.selectedWeek.value];
       const movingCourse = todoLists.splice(params.id, 1)[0];
       todoLists.splice(params.id + params.direction, 0, movingCourse);
       todoLists[params.id + params.direction].id += params.direction;
@@ -202,17 +205,17 @@ export default {
     },
     removeCourse(courseId) {
       this.$dialog
-      .confirm('Do you really want to remove this course?')
-      .then(() => {
-        const todoLists = this.weeks[this.selectedWeek.value].todoLists;
-        todoLists.splice(courseId, 1);
-        for (let i = courseId; i < todoLists.length; i++) {
-          todoLists[i].id--;
-        }
-        this.countCompleted();
-      })
-      .catch(() => {
-      });
+        .confirm('Do you really want to remove this course?')
+        .then(() => {
+          const { todoLists } = this.weeks[this.selectedWeek.value];
+          todoLists.splice(courseId, 1);
+          for (let i = courseId; i < todoLists.length; i += 1) {
+            todoLists[i].id -= 1;
+          }
+          this.countCompleted();
+        })
+        .catch(() => {
+        });
     },
     /**
      * Toggles on visibility of week title edit field

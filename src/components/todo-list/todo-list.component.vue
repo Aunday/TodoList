@@ -74,6 +74,7 @@
 
 import TodoTaskComponent from '../todo-task/todo-task.component.vue';
 import StandardButtonComponent from '../standard-button/standard-button.component.vue';
+
 export default {
   name: 'TodoListComponent',
   props: {
@@ -81,7 +82,7 @@ export default {
     courseCount: {
       type: Number,
       default: 0,
-    }
+    },
   },
   components: {
     TodoTaskComponent,
@@ -104,7 +105,7 @@ export default {
         webinar: 5,
         reading: 6,
         'forum post': 7,
-        'forum reply': 8
+        'forum reply': 8,
       };
       this.todoList.todoTasks.sort((a, b) => {
         const aType = typeMap[a.type];
@@ -144,10 +145,10 @@ export default {
       return `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
     },
     moveCourseLeft() {
-      this.$emit('moveCourse', {id: this.todoList.id, direction: -1});
+      this.$emit('moveCourse', { id: this.todoList.id, direction: -1 });
     },
     moveCourseRight() {
-      this.$emit('moveCourse', {id: this.todoList.id, direction: 1});
+      this.$emit('moveCourse', { id: this.todoList.id, direction: 1 });
     },
     removeCourse() {
       this.$emit('removeCourse', this.todoList.id);

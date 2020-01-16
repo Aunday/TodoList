@@ -122,9 +122,9 @@ export default {
   methods: {
     getBackgroundClass(type) {
       const classMap = {
-        essay: 'type-lime light',
+        essay: 'type-blue light',
         assignment: 'type-yellow light',
-        reading: 'type-blue light',
+        reading: 'type-lime light',
         quiz: 'type-orange light',
         exam: 'type-red light',
         webinar: 'type-green light',
@@ -142,9 +142,9 @@ export default {
      */
     getTypeClass(type) {
       const classMap = {
-        essay: 'type-lime',
+        essay: 'type-blue',
         assignment: 'type-yellow',
-        reading: 'type-blue',
+        reading: 'type-lime',
         quiz: 'type-orange',
         exam: 'type-red',
         webinar: 'type-green',
